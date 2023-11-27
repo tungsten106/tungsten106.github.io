@@ -1,0 +1,137 @@
+---
+title: 搭建github homepage
+date: 2023-11-26 02:20:48 +0800
+categories: [Start, 有的没的]
+tags: [web]     # TAG names should always be lowercase
+---
+
+
+# 搭建github homepage
+
+2023年11月26日 星期日
+
+02:20
+
+## 新建repo
+
+我先是follow这个教程：
+
+https://keysaim.github.io/post/blog/2017-08-15-how-to-setup-your-github-io-blog/
+
+ 
+
+它提供了如何从git repo建立自己的github.io，跟随这个教程知道新建了输出hello world的页面。
+
+https://tungsten106.github.io/ 这个页面有了内容
+
+但是我卡在了选择主题的部分，原博主选择了[Huxpro](https://github.com/Huxpro/huxpro.github.io) 作为主题，但我决定参考另外一个。
+
+
+ ## 选择并clone jekyll主题
+
+这个主题叫jekyll-theme-chirpy: https://github.com/cotes2020/jekyll-theme-chirpy
+
+这个主题的教程：
+
+https://chirpy.cotes.page/posts/getting-started/
+
+在使用**Jekyll**主题之前先需要跟随 https://jekyllrb.com/docs/installation/macos/ 进行环境安装。
+
+这里主要需要通过homebrew安装一些东西。brew install 通常会安装软件到 macOS 系统上的全局位置，而不是绑定到特定的 Python 环境或 Conda 环境。因此，不同 Anaconda 环境通常不会直接影响 brew install 安装的软件。
+
+ 
+
+### 安装ruby报错 
+
+!!! Failed to download ruby versions!
+
+- 查了错误发现有可能是没有安装wget
+
+在搜索后发现需要输入brew install ruby来进行安装
+
+安装后出现：
+
+![image-20231128015240869](/Users/yexl_uk/Library/Application Support/typora-user-images/image-20231128015240869.png)
+
+是说要设置一些环境变量。
+
+参考 https://blog.csdn.net/a71468293a/article/details/104253813 和 macOS Monterey安装Jekyll https://blog.csdn.net/wanghao_sh/article/details/128196126
+
+ 
+
+输入 echo 'export PATH="/opt/homebrew/opt/ruby/bin:$PATH"' >> ~/.zshrc后更新了zsh的配置文件
+
+这样还不够，我们需要更新配置文件：
+
+source .zshrc
+
+更新完再输入ruby -v后得到的是最新版本
+
+ruby 3.2.2 (2023-03-30 revision e51014f9c0) [arm64-darwin22]
+
+ 
+
+然后输入gem install jekyll
+
+- 安装卡顿，可能是源的问题
+- 参考 https://blog.csdn.net/weixin_44512194/article/details/107053421 进行删除/新增源
+
+ 
+
+## 安装主题
+
+ 
+
+教程中我选择option1，更佳jekyll新手友好。
+
+但是在之前的教程中我已经完成过repo的建立，没办法按照教程的通过use the template来建立repo。参考教程1我打算尝试用git clone
+
+以上尝试失败，还是老老实实重新安装了hh
+
+参考https://chirpy.cotes.page/posts/getting-started/#option-1-using-the-chirpy-starter进行安装，或者可以根随以下内容。
+
+
+
+在https://github.com/cotes2020/chirpy-starter页面点击绿色Use this Template再选择Create a new repository，在新弹出的建立repository页面建立一个名称为USERNAME.github.io的repo。注意这里USERNAME必须和自己的用户名一样。
+
+将这个新的repo clone到本地；然后在终端中输入
+
+```shell
+bundle
+```
+
+
+
+
+
+### 本地运行报错
+
+在本地输入 `bundle exec jekyll s` 指令在http://localhost:4000/上可以查看网页部署。
+
+有可能会报错：
+
+```
+Could not find gem 'jekyll-theme-chirpy (~> 6.3, >= 6.3.1)' in locally installed gems.
+
+Run `bundle install` to install missing gems.
+```
+
+或者          
+
+```
+Could not find gem 'jekyll-theme-chirpy (~> 6.3, >= 6.3.1)' in locally installed gems.
+
+The source contains the following gems matching 'jekyll-theme-chirpy':
+
+ \* jekyll-theme-chirpy-6.2.3
+```
+
+第一个报错是因为gem没有安装主题，第二个是因为安装的版本不对（应该安装6.3.1，实际安装了6.2.3）运行`gem install jekyll-theme-chirpy -v 6.3.1` 安装合适的版本就好了，如果再不行的话运行`bundle install `。（参考 https://rubygems.org/gems/jekyll-theme-chirpy/versions/6.3.1 和 https://stackoverflow.com/questions/46380722/jekyll-theme-could-not-be-found ）
+
+- 这里`6.3.1`也可以是其他版本，以报错版本为主
+
+
+
+## 下面尝试修改参数吧
+
+TBC.
