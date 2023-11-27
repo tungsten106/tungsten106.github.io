@@ -43,7 +43,7 @@ https://tungsten106.github.io/ 这个页面有了内容
 
 安装后出现：
 
-![image-20231128015240869](assets/img/image-20231128015240869.png)
+![image-20231128015240869](../assets/img/image-20231128015240869.png)
 
 是说要设置一些环境变量。
 
