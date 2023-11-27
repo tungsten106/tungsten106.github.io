@@ -1,22 +1,16 @@
 ---
-title: 搭建github homepage
+title: 搭建Github Page记录
 date: 2023-11-26 02:20:48 +0800
 categories: [Start, 有的没的]
 tags: [web]     # TAG names should always be lowercase
 ---
 
 
-# 搭建github homepage
-
-2023年11月26日 星期日
-
-02:20
 
 ## 新建repo
 
 我先是follow这个教程：
-
-https://keysaim.github.io/post/blog/2017-08-15-how-to-setup-your-github-io-blog/
+[keysaim教程](https://keysaim.github.io/post/blog/2017-08-15-how-to-setup-your-github-io-blog/)
 
  
 
@@ -29,13 +23,11 @@ https://tungsten106.github.io/ 这个页面有了内容
 
  ## 选择并clone jekyll主题
 
-这个主题叫jekyll-theme-chirpy: https://github.com/cotes2020/jekyll-theme-chirpy
+这个主题叫jekyll-theme-chirpy：[GitHub链接](https://github.com/cotes2020/jekyll-theme-chirpy)
 
-这个主题的教程：
+这个主题的教程：[https://chirpy.cotes.page/posts/getting-started/](https://chirpy.cotes.page/posts/getting-started/)
 
-https://chirpy.cotes.page/posts/getting-started/
-
-在使用**Jekyll**主题之前先需要跟随 https://jekyllrb.com/docs/installation/macos/ 进行环境安装。
+在使用**Jekyll**主题之前先需要跟随 [Jekyll官网指导](https://jekyllrb.com/docs/installation/) 进行环境安装。
 
 这里主要需要通过homebrew安装一些东西。brew install 通常会安装软件到 macOS 系统上的全局位置，而不是绑定到特定的 Python 环境或 Conda 环境。因此，不同 Anaconda 环境通常不会直接影响 brew install 安装的软件。
 
@@ -51,30 +43,36 @@ https://chirpy.cotes.page/posts/getting-started/
 
 安装后出现：
 
-![image-20231128015240869](/Users/yexl_uk/Library/Application Support/typora-user-images/image-20231128015240869.png)
+![image-20231128015240869](assets/img/image-20231128015240869.png)
 
 是说要设置一些环境变量。
 
-参考 https://blog.csdn.net/a71468293a/article/details/104253813 和 macOS Monterey安装Jekyll https://blog.csdn.net/wanghao_sh/article/details/128196126
+参考 [Mac升级ruby到最新版本](https://blog.csdn.net/a71468293a/article/details/104253813) 和 [macOS Monterey安装Jekyll](https://blog.csdn.net/wanghao_sh/article/details/128196126) 这两篇博文。
 
  
+输入 `echo 'export PATH="/opt/homebrew/opt/ruby/bin:$PATH"' >> ~/.zshrc` 后更新了zsh的配置文件
 
-输入 echo 'export PATH="/opt/homebrew/opt/ruby/bin:$PATH"' >> ~/.zshrc后更新了zsh的配置文件
+这样还不够，我们需要更新配置文件。
 
-这样还不够，我们需要更新配置文件：
-
+```zsh
 source .zshrc
+```
 
-更新完再输入ruby -v后得到的是最新版本
+- 这里如果终端是bash则输入：`echo 'export PATH="/opt/homebrew/opt/ruby/bin:$PATH"' >> ~/.bash_profile`，并用 `source .bash_profile` 来更新配置文件。
 
+更新完再输入 `ruby -v` 后得到的是最新版本
+
+```
 ruby 3.2.2 (2023-03-30 revision e51014f9c0) [arm64-darwin22]
+```
+
 
  
 
 然后输入gem install jekyll
 
 - 安装卡顿，可能是源的问题
-- 参考 https://blog.csdn.net/weixin_44512194/article/details/107053421 进行删除/新增源
+- 参考 [github使用Jekyll，在Rails bundle install卡住问题](https://blog.csdn.net/weixin_44512194/article/details/107053421) 进行删除/新增源
 
  
 
@@ -88,11 +86,10 @@ ruby 3.2.2 (2023-03-30 revision e51014f9c0) [arm64-darwin22]
 
 以上尝试失败，还是老老实实重新安装了hh
 
-参考https://chirpy.cotes.page/posts/getting-started/#option-1-using-the-chirpy-starter进行安装，或者可以根随以下内容。
+参考[chirpy主题官方教程](https://chirpy.cotes.page/posts/getting-started/#option-1-using-the-chirpy-starter) 进行安装，或者可以根随以下内容。
 
 
-
-在https://github.com/cotes2020/chirpy-starter页面点击绿色Use this Template再选择Create a new repository，在新弹出的建立repository页面建立一个名称为USERNAME.github.io的repo。注意这里USERNAME必须和自己的用户名一样。
+在 [Github](https://github.com/cotes2020/chirpy-starter) 页面点击绿色Use this Template再选择Create a new repository，在新弹出的建立repository页面建立一个名称为USERNAME.github.io的repo。注意这里USERNAME必须和自己的用户名一样。
 
 将这个新的repo clone到本地；然后在终端中输入
 
