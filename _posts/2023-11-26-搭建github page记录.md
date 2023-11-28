@@ -21,7 +21,7 @@ https://tungsten106.github.io/ 这个页面有了内容
 但是我卡在了选择主题的部分，原博主选择了[Huxpro](https://github.com/Huxpro/huxpro.github.io) 作为主题，但我决定参考另外一个。
 
 
- ## 选择并clone jekyll主题
+## 选择并clone jekyll主题
 
 这个主题叫jekyll-theme-chirpy：[GitHub链接](https://github.com/cotes2020/jekyll-theme-chirpy)
 
@@ -43,13 +43,13 @@ https://tungsten106.github.io/ 这个页面有了内容
 
 安装后出现：
 
-![image-20231128015240869](../assets/img/image-20231128015240869.png)
+![image-20231128015240869](./../assets/img/image-20231128015240869.png)
 
 是说要设置一些环境变量。
 
 参考 [Mac升级ruby到最新版本](https://blog.csdn.net/a71468293a/article/details/104253813) 和 [macOS Monterey安装Jekyll](https://blog.csdn.net/wanghao_sh/article/details/128196126) 这两篇博文。
 
- 
+
 输入 `echo 'export PATH="/opt/homebrew/opt/ruby/bin:$PATH"' >> ~/.zshrc` 后更新了zsh的配置文件
 
 这样还不够，我们需要更新配置文件。
@@ -62,12 +62,12 @@ source .zshrc
 
 更新完再输入 `ruby -v` 后得到的是最新版本
 
-```
+```zsh
 ruby 3.2.2 (2023-03-30 revision e51014f9c0) [arm64-darwin22]
 ```
 
 
- 
+
 
 然后输入gem install jekyll
 
@@ -93,7 +93,7 @@ ruby 3.2.2 (2023-03-30 revision e51014f9c0) [arm64-darwin22]
 
 将这个新的repo clone到本地；然后在终端中输入
 
-```shell
+```zsh
 bundle
 ```
 
@@ -107,7 +107,7 @@ bundle
 
 有可能会报错：
 
-```
+```zsh
 Could not find gem 'jekyll-theme-chirpy (~> 6.3, >= 6.3.1)' in locally installed gems.
 
 Run `bundle install` to install missing gems.
@@ -115,7 +115,7 @@ Run `bundle install` to install missing gems.
 
 或者          
 
-```
+```zsh
 Could not find gem 'jekyll-theme-chirpy (~> 6.3, >= 6.3.1)' in locally installed gems.
 
 The source contains the following gems matching 'jekyll-theme-chirpy':
@@ -126,6 +126,22 @@ The source contains the following gems matching 'jekyll-theme-chirpy':
 第一个报错是因为gem没有安装主题，第二个是因为安装的版本不对（应该安装6.3.1，实际安装了6.2.3）运行`gem install jekyll-theme-chirpy -v 6.3.1` 安装合适的版本就好了，如果再不行的话运行`bundle install `。（参考 https://rubygems.org/gems/jekyll-theme-chirpy/versions/6.3.1 和 https://stackoverflow.com/questions/46380722/jekyll-theme-could-not-be-found ）
 
 - 这里`6.3.1`也可以是其他版本，以报错版本为主
+
+
+
+## 网页部署
+
+到这一步网页其实没有部署好。需要在建立了Github Page的repo中选择Settings，然后选择左侧菜单栏的Pages页面，在Source中从 `Deploy from brance` 更改为 `Github Actions` .
+
+然后在根目录下输入
+
+```zsh
+bundle lock --add-platform x86_64-linux
+```
+
+
+
+
 
 
 
