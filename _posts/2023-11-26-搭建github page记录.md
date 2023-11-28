@@ -160,4 +160,4 @@ TBC.
 
 ## Ref
 
-一位同样适用Chirpy主题的博主: https://zjpzhao.github.io/posts/jekyll-githubpages/
+一位同样适用Chirpy主题的博主: [链接](https://zjpzhao.github.io/posts/jekyll-githubpages/)
