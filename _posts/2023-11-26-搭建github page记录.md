@@ -3,6 +3,8 @@ title: 搭建Github Page记录
 date: 2023-11-26 02:20:48 +0800
 categories: [Start, 有的没的]
 tags: [web]     # TAG names should always be lowercase
+img_path: /assets/img/
+
 ---
 
 
@@ -43,7 +45,7 @@ https://tungsten106.github.io/ 这个页面有了内容
 
 安装后出现：
 
-![image-20231128015240869](./../assets/img/image-20231128015240869.png)
+![image-20231128015240869](image-20231128015240869.png)
 
 是说要设置一些环境变量。
 
@@ -154,3 +156,8 @@ Retrying fetcher due to error (2/4): Bundler::HTTPError Could not fetch specs fr
 ## 下面尝试修改参数吧
 
 TBC.
+
+
+## Ref
+
+一位同样适用Chirpy主题的博主: https://zjpzhao.github.io/posts/jekyll-githubpages/
