@@ -133,7 +133,7 @@ The source contains the following gems matching 'jekyll-theme-chirpy':
 
 到这一步网页其实没有部署好。需要在建立了Github Page的repo中选择Settings，然后选择左侧菜单栏的Pages页面，在Source中从 `Deploy from brance` 更改为 `Github Actions` .
 
-然后在根目录下输入
+请保证 `Gemfile.lock` 文件已commit到repo。如果操作系统不是Linux还需要在根目录下输入：
 
 ```zsh
 bundle lock --add-platform x86_64-linux
@@ -141,7 +141,13 @@ bundle lock --add-platform x86_64-linux
 
 
 
+- 这一步有可能遇到报错：
 
+```zsh
+Retrying fetcher due to error (2/4): Bundler::HTTPError Could not fetch specs from https://rubygems.org/ due to underlying error <Net::OpenTimeout: Failed to open TCP connection to rubygems.org:443 (execution expired) (https://rubygems.org/specs.4.8.gz)>
+```
+
+这里可以参考[stackoverflow](https://stackoverflow.com/questions/38410185/bundle-install-is-not-working) 上的一个回答，将 `Gemfile` （我这里修改成了 `Gemfile.lock` 也成功了）中的`source https://rubygems.org/`  改成 `source http://rubygems.org/`。这里我猜测可能是网络原因。
 
 
 
