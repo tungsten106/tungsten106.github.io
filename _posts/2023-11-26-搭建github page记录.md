@@ -1,5 +1,5 @@
 ---
-title: 搭建Github Page记录
+title: 通过Jekyll Chirpy主题搭建Github Page记录
 date: 2023-11-26 02:20:48 +0800
 categories: [Start, 有的没的]
 tags: [web]     # TAG names should always be lowercase
@@ -12,8 +12,6 @@ img_path: /assets/img/
 
 我先是follow这个教程：
 [keysaim教程](https://keysaim.github.io/post/blog/2017-08-15-how-to-setup-your-github-io-blog/)
-
- 
 
 它提供了如何从git repo建立自己的github.io，跟随这个教程知道新建了输出hello world的页面。
 
@@ -40,7 +38,7 @@ https://tungsten106.github.io/ 这个页面有了内容
 
 - 查了错误发现有可能是没有安装wget
 
-在搜索后发现需要输入brew install ruby来进行安装
+在搜索后发现需要输入 `brew install ruby` 来进行安装
 
 安装后出现：
 
@@ -49,7 +47,6 @@ https://tungsten106.github.io/ 这个页面有了内容
 是说要设置一些环境变量。
 
 参考 [Mac升级ruby到最新版本](https://blog.csdn.net/a71468293a/article/details/104253813) 和 [macOS Monterey安装Jekyll](https://blog.csdn.net/wanghao_sh/article/details/128196126) 这两篇博文。
-
 
 输入 `echo 'export PATH="/opt/homebrew/opt/ruby/bin:$PATH"' >> ~/.zshrc` 后更新了zsh的配置文件
 
@@ -67,9 +64,6 @@ source .zshrc
 ruby 3.2.2 (2023-03-30 revision e51014f9c0) [arm64-darwin22]
 ```
 
-
-
-
 然后输入gem install jekyll
 
 - 安装卡顿，可能是源的问题
@@ -79,28 +73,20 @@ ruby 3.2.2 (2023-03-30 revision e51014f9c0) [arm64-darwin22]
 
 ## 安装主题
 
- 
-
 教程中我选择option1，更佳jekyll新手友好。
 
-但是在之前的教程中我已经完成过repo的建立，没办法按照教程的通过use the template来建立repo。参考教程1我打算尝试用git clone
-
-以上尝试失败，还是老老实实重新安装了hh
+~~但是在之前的教程中我已经完成过repo的建立，没办法按照教程的通过use the template来建立repo。参考教程1我打算尝试用`git clone`，尝试失败，还是老老实实重新安装了hh~~
 
 参考[chirpy主题官方教程](https://chirpy.cotes.page/posts/getting-started/#option-1-using-the-chirpy-starter) 进行安装，或者可以根随以下内容。
 
 
 在 [Github](https://github.com/cotes2020/chirpy-starter) 页面点击绿色Use this Template再选择Create a new repository，在新弹出的建立repository页面建立一个名称为USERNAME.github.io的repo。注意这里USERNAME必须和自己的用户名一样。
 
-将这个新的repo clone到本地；然后在终端中输入
+将这个新的repo clone到本地；然后在终端中输入：
 
 ```zsh
 bundle
 ```
-
-
-
-
 
 ### 本地运行报错
 
@@ -129,7 +115,6 @@ The source contains the following gems matching 'jekyll-theme-chirpy':
 - 这里`6.3.1`也可以是其他版本，以报错版本为主
 
 
-
 ## 网页部署
 
 到这一步网页其实没有部署好。需要在建立了Github Page的repo中选择Settings，然后选择左侧菜单栏的Pages页面，在Source中从 `Deploy from brance` 更改为 `Github Actions` .
@@ -140,8 +125,6 @@ The source contains the following gems matching 'jekyll-theme-chirpy':
 bundle lock --add-platform x86_64-linux
 ```
 
-
-
 - 这一步有可能遇到报错：
 
 ```zsh
@@ -150,13 +133,9 @@ Retrying fetcher due to error (2/4): Bundler::HTTPError Could not fetch specs fr
 
 这里可以参考[stackoverflow](https://stackoverflow.com/questions/38410185/bundle-install-is-not-working) 上的一个回答，将 `Gemfile` （我这里修改成了 `Gemfile.lock` 也成功了）中的`source https://rubygems.org/`  改成 `source http://rubygems.org/`。这里我猜测可能是网络原因。
 
+然后随便git commit一些内容进行激活，就可以在repo的Action页面中查看进程了。第一次加载网页可能会比较久，即使Action页面显示Deployed也有可能加载不出，耐心等待几分钟就好。
 
 
-## 下面尝试修改参数吧
+## Reference
 
-TBC.
-
-
-## Ref
-
-一位同样适用Chirpy主题的博主: [链接](https://zjpzhao.github.io/posts/jekyll-githubpages/)
+一位同样适用Chirpy主题的教程: [链接](https://zjpzhao.github.io/posts/jekyll-githubpages/)
