@@ -1,12 +1,10 @@
 ---
 title: 通过Jekyll Chirpy主题搭建Github Page记录
 date: 2023-11-26 02:20:48 +0800
-categories: [有的没的, 博客搭建]
+categories: [实践记录]
 tags: [jekyll]     # TAG names should always be lowercase
 img_path: /assets/img/
 ---
-
-
 
 ## 新建repo
 
