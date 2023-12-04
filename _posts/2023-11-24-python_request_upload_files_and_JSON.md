@@ -2,7 +2,7 @@
 title: 如何用python request同时上传文件和JSON参数
 date: 2023-11-24 13:43:21 +0800
 categories: [踩坑总结]
-tags: [web, Python, flask]     # TAG names should always be lowercase
+tags: [web, python, flask]     # TAG names should always be lowercase
 img_path: /assets/img/
 ---
 
