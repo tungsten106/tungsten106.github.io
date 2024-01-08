@@ -52,6 +52,7 @@ img_path: /assets/img/
 ![img](anomaly_attn/anomaly_attn.png)
 
 计算步骤为：
+
 $$
 \begin{aligned} & \mathcal{Z}^l=\text { Layer-Norm }\left(\text { Anomaly-Attention }\left(\mathcal{X}^{l-1}\right)+\mathcal{X}^{l-1}\right) \\ & \mathcal{X}^l=\text { Layer-Norm }\left(\text { Feed-Forward }\left(\mathcal{Z}^l\right)+\mathcal{Z}^l\right),\end{aligned}
 $$
@@ -70,7 +71,7 @@ $$
 
 算法图参考：
 
-anomaly_attn/model_architecture.png)
+![img](anomaly_attn/model_architecture.png)
 
 
 通过KL-Divergence来计算Association Discrepancy：
@@ -105,9 +106,10 @@ Minimax 策略：由于直接最大化关联差异会导致高斯核的scale参�
 - 这样的流程迫使关联序列更关注不相邻的水平。
 
 公式
+
 $$
-\text{Minimize Phase: }\mathcal{L}_{\text{Total}}(\hat{\mathcal{{X}}}, \mathcal{P},\mathcal{S}_{\text{detach}} ,-\lambda; \mathcal{X}) \\
-\text{Maximize Phase: }\mathcal{L}_{\text{Total}}(\hat{\mathcal{{X}}}, \mathcal{P}_{\text{detach}}, \mathcal{S}, \lambda; \mathcal{X})
+\text{Minimize Phase: }\mathcal{L}_{\text{Total}}(\hat{\mathcal{X}}, \mathcal{P},\mathcal{S}_{\text{detach}} ,-\lambda; \mathcal{X}) \\
+\text{Maximize Phase: }\mathcal{L}_{\text{Total}}(\hat{\mathcal{X}}, \mathcal{P}_{\text{detach}}, \mathcal{S}, \lambda; \mathcal{X})
 $$
 
 - detach指的是停止关联的梯度反向传播。由于P在最小化阶段逼近$S_{\text{detach}}$，最大化阶段将对series-association产生更强的约束，迫使时间点更多地关注非相邻区域。在重建损失下，异常比正常时间点更难实现，从而放大了关联差异的正常-异常可区分性。
@@ -115,9 +117,11 @@ $$
 ### 基于关联的异常评判标准
 
 在重构标准中，我们添加了正则化的关联差异，将同时利用时间表示和可区分的关联差异。最后得出的评判标准（异常分数）如下：
+
 $$
 \operatorname{AnomalyScore}(\mathcal{X})=\operatorname{Softmax}(-\operatorname{AssDis}(\mathcal{P}, \mathcal{S} ; \mathcal{X})) \odot\left[\left\|\mathcal{X}_{i,:}-\widehat{\mathcal{X}}_{i,:}\right\|_2^2\right]_{i=1, \cdots, N}
 $$
+
 第一部分为正则化的关联差异，第二部分为重构错误。$\odot$ 为元素乘法
 
 AssDis越小，异常分数越大；reconstruction error越大，异常分数越大。为了更好地重建，异常值通常会降低重构差异，导致越高的异常分数。因此这样的设计可以让重构错误核关联差异协同提高检测性能。
@@ -130,26 +134,21 @@ AssDis越小，异常分数越大；reconstruction error越大，异常分数越
 
 ### 安装pytorch
 
-只能在python3.6上跑，需要安装对应的pytorch（要求：Python 3.6, PyTorch >= 1.4.0）
-参考 https://blog.csdn.net/yup1212/article/details/124277058 发现可能只能在1.5版本上运行，刚好满足要求
-官网下载v1.5版本的指南： https://pytorch.org/get-started/previous-versions/#v151 ，可以根据自己gpu/电脑系统版本选择
-我是linux，cuda版本12.2，这里选择了
+~~作者给出的源码显示只能在python3.6上跑，需要安装对应的pytorch（要求：Python 3.6, PyTorch >= 1.4.0），参考[总结：pytorch对应版本安装](https://blog.csdn.net/yup1212/article/details/124277058)发现可能只能在1.5版本上运行，刚好满足要求~~
+~~官网下载v1.5版本的指南： 下载[pytroch-1.5.1](https://pytorch.org/get-started/previous-versions/#v151) ，可以根据自己gpu/~~
+~~我是linux，cuda版本12.2，这里选择了`conda install pytorch==1.5.1 torchvision==0.6.1 cudatoolkit=10.2 -c pytorch`~~
 
-```bash
-conda install pytorch==1.5.1 torchvision==0.6.1 cudatoolkit=10.2 -c pytorch
-```
+~~但后来发现还是报错，在 `torch.autograd.backward(self, gradient, retain_graph, create_graph)`处报错：`RuntimeError: no valid convolution algorithms available in CuDNN (getValidAlgorithms at /opt/conda/conda-bld/pytorch_1591914838379/work/aten/src/ATen/native/cudnn/Conv.cpp:430)`~~
 
-但后来发现还是报错，
-在 `torch.autograd.backward(self, gradient, retain_graph, create_graph)`
-处报错：`RuntimeError: no valid convolution algorithms available in CuDNN (getValidAlgorithms at /opt/conda/conda-bld/pytorch_1591914838379/work/aten/src/ATen/native/cudnn/Conv.cpp:430)`
+~~意思是无法在CuDNN中找到可用的卷积算法，看下来还是pytorch版本的问题。~~
 
-意思是无法在CuDNN中找到可用的卷积算法，看下来还是pytorch版本的问题。参考 https://blog.csdn.net/hymn1993/article/details/125558623 发现可以安装python3.7，于是重新安装。参考这篇文章的作者的选择，我安装了pytorch 1.12.1，这里选择了cuda11.3的版本：
+参考[Anomaly-Transformer (ICLR 2022 Spotlight)复现过程及问题](https://blog.csdn.net/hymn1993/article/details/125558623)发现可以安装python3.7，于是重新安装。参考这篇文章的作者的选择，我安装了pytorch 1.12.1，这里选择了cuda11.3的版本：
 
 ```bash
 conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cudatoolkit=11.3 -c pytorch
 ```
 
-由于我cuda版本为12.2，不能选择太低版本的比如CUDA 10.2的安装指令，会报错：
+由于我cuda版本为12.2，不能选择太低版本的比如CUDA 10.2的安装指令，会有以下报错：
 
 ```bash
 NVIDIA A100-PCIE-40GB with CUDA capability sm_80 is not compatible with the current PyTorch installation.
@@ -165,7 +164,7 @@ pip install pandas scikit-learn
 
 ## 2. 下载数据集
 
-根据作者在README中给到的链接，可以通过google drive获取数据集： https://drive.google.com/drive/folders/1gisthCoE-RrKJ0j3KPV7xiibhHWT9qRm?usp=sharing
+根据作者在README中给到的链接，可以通过google drive获取数据集： [link](https://drive.google.com/drive/folders/1gisthCoE-RrKJ0j3KPV7xiibhHWT9qRm?usp=sharing)
 
 ## 3. 进行训练和测试
 
@@ -192,8 +191,8 @@ Accuracy : 0.9916, Precision : 0.8850, Recall : 0.9161, F-score : 0.9003
 
 Accuracy : 0.9873, Precision : 0.9730, Recall : 0.9816, F-score : 0.9773
 
-代码解读可以参考 https://blog.csdn.net/smileyan9/article/details/128439360
-代码复现（讨论更多数据集）可以参考 https://cloud.tencent.com/developer/article/2373880
+代码解读可以参考 [《异常检测——从经典算法到深度学习》21 Anomaly Transformer：具有关联差异的时间序列异常检测](https://blog.csdn.net/smileyan9/article/details/128439360)
+代码复现（讨论更多数据集）可以参考 [论文复现 | Anomaly Transformer: Time Series Anomaly Detection with Association Discrepancy](https://cloud.tencent.com/developer/article/2373880)
 
 
 
@@ -203,14 +202,14 @@ Accuracy : 0.9873, Precision : 0.9730, Recall : 0.9816, F-score : 0.9773
 
 D_{KL}(P||Q): KL散度通常用于量化概率分布P与概率分布Q的不同。从采样角度，KL散度描述了我们用分布Q来估计数据的真实分布P的编码损失。
 	- 假设对某随机变量存在两个概率分布P，Q。如果该随机变量为离散，则KL散度定义为：
+
 $$
 \mathbb{D}_{\mathrm{KL}}(P \| Q)=\sum_i P(i) \ln \left(\frac{P(i)}{Q(i)}\right)
 $$
-（如果是连续则求和符号变积分符号，范围取-inf~inf）
 
-$D_{KL}(P\\|Q)=0$ 当且仅当$P=Q$
+（如果是连续则求和符号变积分符号，范围取-$\inf$~$\inf$）; $D_{KL}(P\\|Q)=0$ 当且仅当$P=Q$
 
-- 关于KL散度的笔记，[链接](https://zhuanlan.zhihu.com/p/438129018)
+- 参考[关于KL散度（Kullback-Leibler Divergence）的笔记](https://zhuanlan.zhihu.com/p/438129018)
 
 ## Transformers模型
 
@@ -261,6 +260,5 @@ Reconstruction loss是机器学习中一种常见的损失函数，特别是在�
 重构损失在模型的训练过程中起到至关重要的作用，它直接影响模型的重构质量和学习到的特征的有效性。通过最小化重构损失，可以使得模型在各种任务，如降维、去噪、生成模型等方面表现得更好。
 
 # Reference
-
-- 腾讯云论坛：[ICLR 2022 | 通过关联差异进行时序异常检测](https://cloud.tencent.com/developer/article/1966885)
-- 阅读小助手：[chatpdf](https://www.chatpdf.com/?ref=futuretools.io)
+- 腾讯云论坛: [ICLR 2022 通过关联差异进行时序异常检测](https://cloud.tencent.com/developer/article/1966885)
+- 阅读小助手: [chatpdf](https://www.chatpdf.com/?ref=futuretools.io)
