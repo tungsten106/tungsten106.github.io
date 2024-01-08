@@ -94,9 +94,9 @@ kramdown:
 ></script>
 ```
 
-其中倒数第二行不可以被替换。
+其中 `src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"` 这一行不可以被替换。
 
 原作者直接在 `_includes` 文件夹中添加了 `mathjax_support.html` 文件写了以上内容，然后在`_layouts/default.html` 中调用（调用位置为 `{% include head.html %}` 下面一行），具体如何插入可以参考上面的Issue链接。
 
-展示结果：
-![results](add_mathjex_sample.png)
+<!-- 展示结果：
+![results](add_mathjex_sample.png) -->
