@@ -1,13 +1,10 @@
 ---
-title: ICLR 2022: Anomaly Transformer论文阅读笔记+代码复现
-
+title: "ICLR 2022: Anomaly Transformer论文阅读笔记+代码复现"
 date: 2024-01-05 18:04:00 +0800
 categories: [学习笔记]
 tags: [web, python, flask]     # TAG names should always be lowercase
 img_path: /assets/img/
 ---
-
-# ICLR 2022: Anomaly Transformer论文阅读笔记+代码复现
 
 本论文全名为Anomaly Transformer: Time Series Anomaly Detection with Association Descrepancy（通过关联差异进行时序异常检测），主要提出了一种无监督的异常点检测算法，并在6个benchmarks上测试，获取良好结果。
 
