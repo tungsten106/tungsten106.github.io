@@ -52,7 +52,7 @@ img_path: /assets/img/
 
 假设我们有L层，一层模型结构为：
 
-![img](anomaly_attn.png)
+![img](anomaly_attn/anomaly_attn.png)
 
 计算步骤为：
 $$
