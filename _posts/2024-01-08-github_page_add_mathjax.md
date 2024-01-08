@@ -1,6 +1,6 @@
 ---
 title: Github page数学公式无法正常显示解决方案(MathJax)
-date: 2024-01-08 323:02:00 +0800
+date: 2024-01-08 23:02:00 +0800
 categories: [踩坑总结]
 tags: [javascripts, markdown, latex]     # TAG names should always be lowercase
 img_path: /assets/img/
@@ -99,4 +99,4 @@ kramdown:
 原作者直接在 `_includes` 文件夹中添加了 `mathjax_support.html` 文件写了以上内容，然后在`_layouts/default.html` 中调用（调用位置为 `{% include head.html %}` 下面一行），具体如何插入可以参考上面的Issue链接。
 
 展示结果：
-![results](img/add_mathjex_sample.png)
+![results](add_mathjex_sample.png)
