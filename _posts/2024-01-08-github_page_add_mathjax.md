@@ -62,3 +62,34 @@ kramdown:
 ## 方法3: 目前效果最好
 
 这个方法我是在chirpy主题的issue 1140中找到答案的，链接在[这里](https://github.com/cotes2020/jekyll-theme-chirpy/issues/1140)；参考**[otzslayer](https://github.com/otzslayer)** 的答案，可以直接在`_layouts/default.html` 中添加如下一段：
+
+```javascript
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      TeX: {
+        equationNumbers: {
+          autoNumber: "AMS"
+        }
+      },
+      extensions: ["tex2jax.js"],
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true,
+      "HTML-CSS": { fonts: ["TeX"] }
+    }
+  });
+  MathJax.Hub.Register.MessageHook("Math Processing Error",function (message) {
+        alert("Math Processing Error: "+message[1]);
+      });
+  MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
+        alert("Math Processing Error: "+message[1]);
+      });
+</script>
+<script
+  type="text/javascript"
+  async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"
+></script>
+```
