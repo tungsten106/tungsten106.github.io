@@ -93,3 +93,6 @@ kramdown:
   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"
 ></script>
 ```
+
+其中 `src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"` 这一行不可以被替换。
+
