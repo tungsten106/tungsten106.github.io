@@ -59,3 +59,6 @@ kramdown:
 
 在 `_includes/head.html` 中添加如方法1同样的一段JS代码，原理一样，效果也一样。
 
+## 方法3: 目前效果最好
+
+这个方法我是在chirpy主题的issue 1140中找到答案的，链接在[这里](https://github.com/cotes2020/jekyll-theme-chirpy/issues/1140)；参考**[otzslayer](https://github.com/otzslayer)** 的答案，可以直接在`_layouts/default.html` 中添加如下一段：
