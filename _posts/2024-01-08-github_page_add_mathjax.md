@@ -39,7 +39,7 @@ kramdown:
 
 搜索到的其中一种方式就是在每篇文章开头加入如下一段JS代码：
 
-```javascript
+```
 <head>
     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
     <script type="text/x-mathjax-config">
@@ -63,7 +63,7 @@ kramdown:
 
 这个方法我是在chirpy主题的issue 1140中找到答案的，链接在[这里](https://github.com/cotes2020/jekyll-theme-chirpy/issues/1140)；参考**[otzslayer](https://github.com/otzslayer)** 的答案，可以直接在`_layouts/default.html` 中添加如下一段：
 
-```javascript
+```
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({
       TeX: {
