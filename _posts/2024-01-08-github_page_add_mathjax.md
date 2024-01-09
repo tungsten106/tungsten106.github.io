@@ -35,7 +35,7 @@ kramdown:
 
 这里的配置可能要根据自己选择或者每个主题的固定配置，不需要一定和如上所写的一样。
 
-<!-- ## 方法1: 在文章开头加入js内容（不太ok）
+## 方法1: 在文章开头加入js内容（不太ok）
 
 搜索到的其中一种方式就是在每篇文章开头加入如下一段JS代码：
 
@@ -99,4 +99,4 @@ kramdown:
 原作者直接在 `_includes` 文件夹中添加了 `mathjax_support.html` 文件写了以上内容，然后在`_layouts/default.html` 中调用（调用位置为 `{% include head.html %}` 下面一行），具体如何插入可以参考上面的Issue链接。
 
 展示结果：
-![results](add_mathjex_sample.png) -->
+![results](add_mathjex_sample.png)
