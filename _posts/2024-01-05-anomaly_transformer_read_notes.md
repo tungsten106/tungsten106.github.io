@@ -2,7 +2,7 @@
 title: "ICLR 2022: Anomaly Transformer论文阅读笔记+代码复现"
 date: 2024-01-05 18:04:00 +0800
 categories: [学习笔记]
-tags: [web, python, flask]     # TAG names should always be lowercase
+tags: [dsml, python]     # TAG names should always be lowercase
 img_path: /assets/img/
 ---
 
