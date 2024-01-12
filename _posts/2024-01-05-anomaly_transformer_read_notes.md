@@ -1,8 +1,8 @@
 ---
-title: "ICLR 2022: Anomaly Transformer论文阅读笔记+代码复现"
+title: "ICLR 2022: Anomaly Transformer论文阅读笔记(1) 初步理解和代码复现"
 date: 2024-01-05 18:04:00 +0800
 categories: [学习笔记]
-tags: [dsml, python]     # TAG names should always be lowercase
+tags: [dsml, python, time_series]     # TAG names should always be lowercase
 img_path: /assets/img/
 ---
 
@@ -112,11 +112,12 @@ $$
 \text{Maximize Phase: }\mathcal{L}_{\text{Total}}(\hat{\mathcal{X}}, \mathcal{P}_{\text{detach}}, \mathcal{S}, \lambda; \mathcal{X})
 $$
 
-- detach指的是停止关联的梯度反向传播。由于P在最小化阶段逼近$S_{\text{detach}}$，最大化阶段将对series-association产生更强的约束，迫使时间点更多地关注非相邻区域。在重建损失下，异常比正常时间点更难实现，从而放大了关联差异的正常-异常可区分性。
+- 在 PyTorch 中，`detach()` 方法用于返回一个新的 Tensor，这个 Tensor 和原来的 Tensor 共享相同的内存空间，但是不会参与反向传播。所以在这里被使用于阶段反向传播的梯度计算，使$\mathcal{S}$和$\mathcal{P}$不会被重复计算梯度，减少计算量和内存。这里可以理解为通过固定$\mathcal{S}$、只更新$\mathcal{P}$的梯度，使$\mathcal{P}$在prior高斯分布范围内更接近$\mathcal{S}$。
+- 由于$\mathcal{P}$在最小化阶段逼近$\mathcal{S}_{\text{detach}}$，最大化阶段将对series-association产生更强的约束，迫使时间点更多地关注非相邻区域。在重建损失下，异常比正常时间点更难实现，从而放大了关联差异的正常-异常可区分性。
 
 ### 基于关联的异常评判标准
 
-在重构标准中，我们添加了正则化的关联差异，将同时利用时间表示和可区分的关联差异。最后得出的评判标准（异常分数）如下：
+在重构标准中，作者添加了正则化的关联差异，将同时利用时间表示和可区分的关联差异。最后得出的评判标准（异常分数）如下：
 
 $$
 \operatorname{AnomalyScore}(\mathcal{X})=\operatorname{Softmax}(-\operatorname{AssDis}(\mathcal{P}, \mathcal{S} ; \mathcal{X})) \odot\left[\left\|\mathcal{X}_{i,:}-\widehat{\mathcal{X}}_{i,:}\right\|_2^2\right]_{i=1, \cdots, N}
@@ -129,6 +130,12 @@ AssDis越小，异常分数越大；reconstruction error越大，异常分数越
 
 
 # 代码复现
+
+论文源码可以在github上获取：在 [https://github.com/thuml/Anomaly-Transformer](https://github.com/thuml/Anomaly-Transformer) 处下载，或者直接在需要安装的部分打开cmd，输入
+
+```bash
+git clone https://github.com/thuml/Anomaly-Transformer.git
+```
 
 ## 1. 装环境
 
