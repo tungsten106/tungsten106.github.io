@@ -26,25 +26,25 @@ Transfomer的自注意力机制(self-attention mechanism)：一种用于计算�
 
 作者将Transformers用于时间序列时有以下发现，并引申出两个概念：
 
-1. 每个点之间的时序关系可以通过self-attention获得。这个关联分布可以为整个时序上下文提供丰富的描述，展示动态模式，例如周期或趋势，此关联分布被定义为序列关联(<font color=Blue>**_series association_**</font>)， S：
+1. 每个点之间的时序关系可以通过self-attention获得。这个关联分布可以为整个时序上下文提供丰富的描述，展示动态模式，例如周期或趋势，此关联分布被定义为序列关联(**_<font color=Blue> series-association </font>_**)， $\mathcal{S}$：
 
-   > “The association distribution of each time point can provide a more informative description for the temporal context, indicating dynamic patterns, such as the period or trend of time series. We name the above association distribution as the series-association, which can be discovered from the raw series by Transformers”
+   > "The association distribution of each time point can provide a more informative description for the temporal context, indicating dynamic patterns, such as the period or trend of time series. We name the above association distribution as the series-association, which can be discovered from the raw series by Transformers"
 
-2. 由于异常点和正常点相比十分稀少，异常点的比较难与整个序列建立关联，但由于连续性，异常点更有可能与其相邻的时间点建立更强关联。这种 adjacent-concentration inductive bias （临近集中传导偏差）被称为先验关联(<font color=#E36C07>**_prior-association_**</font>)，P：
+2. 由于异常点和正常点相比十分稀少，异常点的比较难与整个序列建立关联，但由于连续性，异常点更有可能与其相邻的时间点建立更强关联。这种 adjacent-concentration inductive bias （临近集中传导偏差）被称为先验关联(**_<font color=Orange>prior-association</font>_**)，$\mathcal{P}$：
 
-   > “The associations of anomalies shall concentrate on the adjacent time points that are more likely to contain similar abnormal patterns due to the continuity. Such an adjacent-concentration inductive bias is referred to as the prior-association.”
+   > "The associations of anomalies shall concentrate on the adjacent time points that are more likely to contain similar abnormal patterns due to the continuity. Such an adjacent-concentration inductive bias is referred to as the prior-association."
 
 作者认为这两者之间的差异可以用于衡量异常点，定义了关联差异(Association Discrepancy)，AssDis：
 
-> “This leads to a new anomaly criterion for each time point, quantified by the distance between each time point’s prior-association and its series-association, named as Association Discrepancy.”
+> "This leads to a new anomaly criterion for each time point, quantified by the distance between each time point’s prior-association and its series-association, named as Association Discrepancy."
 
 ## 网络结构和对比：vs Transformers
 
 可以参考一下网络结构的对比：
 
-![img](C:\Users\yexl_\OneDrive\文档\读论文\anomaly_attn/compare networks.jpg)
+![img](anomaly_attn/compare networks.jpg)
 
-在原本Transformer(左)的基础上，首先因为是非监督学习，去除了decoder的部分；源码中的Input Embedding和Positional Encoding与Transformer的也比较相近。做出较大改动的是encoder的部分，由6层encoder改成了3层，并修改了Attention Layer的构成。输出部分也有更改，从统计概率变成了encode过的output $\hat{\mathcal{X}}$, series-association $\mathhat{S}$ 和prior-association $\mathhat{P}$。
+在原本Transformer(左)的基础上，首先因为是非监督学习，去除了decoder的部分；源码中的Input Embedding和Positional Encoding与Transformer的也比较相近。做出较大改动的是encoder的部分，由6层encoder改成了3层，并修改了Attention Layer的构成。输出部分也有更改，从统计概率变成了encode过的output $\hat{\mathcal{X}}$, series-association $\mathcal{S}$ 和prior-association $\mathcal{P}$。
 
 # 网络部分/代码对应
 
@@ -125,7 +125,7 @@ class EncoderLayer(nn.Module):
 
 论文中提到的每个第$l$层迭代公式与 `EncoderLayer` 的forward函数对应如下：
 
-![img](C:\Users\yexl_\OneDrive\文档\读论文\anomaly_attn/encoder_layer.png)
+![img](anomaly_attn/encoder_layer.png)
 
 
 
@@ -185,37 +185,43 @@ class AttentionLayer(nn.Module):
 
 
 这里的anomaly-attention运算为这一系列公式：
+
 $$
 \text{Initialization}: \mathcal{Q}, \mathcal{K}, \mathcal{V}, \sigma=\mathcal{X}^{l-1} W_{\mathcal{Q}}^l, \mathcal{X}^{l-1} W_{\mathcal{K}}^l, \mathcal{X}^{l-1} W_{\mathcal{V}}^l, \mathcal{X}^{l-1} W_\sigma^l \\ 
 \text{Prior-Association}: \mathcal{P}^l=\operatorname{Rescale}\left(\left[\frac{1}{\sqrt{2 \pi} \sigma_i} \exp \left(-\frac{|j-i|^2}{2 \sigma_i^2}\right)\right]_{i, j \in\{1, \cdots, N\}}\right) \\ 
 \text{Series-Association}: \mathcal{S}^l=\operatorname{Softmax}\left(\frac{\mathcal{Q K}^{\mathrm{T}}}{\sqrt{d_{\text {model }}}}\right) \\ 
 \text{Reconstruction}: \widehat{\mathcal{Z}}^l=\mathcal{S}^l \mathcal{V}
 $$
+
 其中每一部分都可以在 `AnomalyAttention` 类中被解构：
 
-![img](C:\Users\yexl_\OneDrive\文档\读论文\anomaly_attn/attn_layer.jpg)
+![img](anomaly_attn/attn_layer.jpg)
 
 
 
 # 优化机制与算法对应
 
-再回到一开始的算法结构图，可以看到输出了output$\hat{\mathcal{X}}$，series-association $\mathcal{S}$和prior-association $\mathcal{P}$。其中后两者会被用于计算关联差异**AssDis**：
+再回到一开始的算法结构图，可以看到输出了output $\hat{\mathcal{X}}$，series-association $\mathcal{S}$和prior-association $\mathcal{P}$。其中后两者会被用于计算关联差异**AssDis**：
+
 $$
 \operatorname{AssDis}(\mathcal{P}, \mathcal{S} ; \mathcal{X})=\left[\frac{1}{L} \sum_{l=1}^L\left(\operatorname{KL}\left(\mathcal{P}_{i,:}^l \| \mathcal{S}_{i,:}^l\right)+\mathrm{KL}\left(\mathcal{S}_{i,:}^l \| \mathcal{P}_{i,:}^l\right)\right)\right]_{i=1, \cdots, N}
 $$
+
 并且$\hat{\mathcal{X}}$会被用于计算损失函数：
+
 $$
 \mathcal{L}_{\text {Total }}(\widehat{\mathcal{X}}, \mathcal{P}, \mathcal{S}, \lambda ; \mathcal{X})=\|\mathcal{X}-\widehat{\mathcal{X}}\|_{\mathrm{F}}^2-\lambda \times\|\operatorname{AssDis}(\mathcal{P}, \mathcal{S} ; \mathcal{X})\|_1
 $$
+
 这里第一项是reconstruction loss。
 
 这一部分的计算可以在 `solver.py` 中定义的 `Solver.train()` 里找到。因为比较长我会截取一部分：
 
-![img](C:\Users\yexl_\OneDrive\文档\读论文\anomaly_attn/compute_loss.png)
+![img](anomaly_attn/compute_loss.png)
 
 上图也给出了minimax的优化策略。由于直接最大化关联差异会导致高斯核的$\lambda$参数急速减小，先序序列会变得无意义，因此作者使用了这样的minimax策略进行参考：
 
-![img](C:\Users\yexl_\OneDrive\文档\读论文\anomaly_attn/minimax.png)
+![img](anomaly_attn/minimax.png)
 
 注意这里的 `.detach()` 方法主要是用于让该Tensor不再参与反向传播，即不会在模型中被更新，减少计算量和内存。我的理解是，第一步minimize phase当$\lambda$为负时，减小$\mathcal{L}$为减小$\mathcal{P}$和$\mathcal{S}$之间的距离（$\operatorname{AssDis}(\mathcal{P}, \mathcal{S} ; \mathcal{X})$），通过固定$\mathcal{S}$，只更新$\mathcal{P}$的梯度，使$\mathcal{P}$在prior高斯分布范围内更接近$\mathcal{S}$；第二步maximize phase我们固定$\mathcal{P}$，使$\lambda$为正，优化中会拉大$\mathcal{P}$和$\mathcal{S}$之间的距离。可以参考上图最右边的series-association变得更平滑，单峰更不明显，实际它的分布与prior-association之间的距离更大了。
 
