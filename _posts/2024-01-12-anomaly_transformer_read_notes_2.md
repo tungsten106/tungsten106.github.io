@@ -6,7 +6,7 @@ tags: [dsml, python, time_series]     # TAG names should always be lowercase
 img_path: /assets/img/
 ---
 
-Anomaly Transformer是一个由Transformer: [Attention Is All You Need](arxiv.org/abs/1706.03762) 启发出的检测时间序列异常点的无监督学习算法。在这一篇我会深度解析论文算法以及代码的一一对应，让人更方便能读懂和使用源代码。
+Anomaly Transformer是一个由Transformer: [Attention Is All You Need](https://arxiv.org/abs/1706.03762) 启发出的检测时间序列异常点的无监督学习算法。在这一篇我会深度解析论文算法以及代码的一一对应，让人更方便能读懂和使用源代码。
 
 # 阅读前提
 
