@@ -14,7 +14,7 @@ img_path: /assets/img/
 
 离散傅里叶变换（Discrete Fourier Transform，简称DFT）是一种数学算法，用于将一个序列或信号从时域转换到频域，广泛应用于信号处理、图像处理、音频分析、通信系统等领域。时域是指信号随时间的变化，而频域则描述了信号中不同频率成分的分布。人话说，就是由一段**<font color=Blue>x=时间; y=幅度</font>**的信号数据转换成为**<font color=Red>x=频率</font>**; **<font color=Blue>y=幅度</font>**的数据，可以参考以下这个图：
 
-![img](timesnet\FFT_demo.png)
+![img](timesnet/FFT_demo.png)
 
 原信号（上图）中存在两种不同的频率（`f=25` 和 `f=100`），通过DFT提取可以看到下图中，它们在频域上显示了两个峰出来。在频域中，信号被表示为一系列频率成分，每个成分由一个幅度(amplitude)和相位(phase)组成。
 
