@@ -111,3 +111,15 @@ pd.read_clipborad(sep="\t")
 
 - `sep` ：调整分隔符，一般csv为 `sep=","` ，txt为 `sep="\t"`
 - `encoding` ：文件编码格式，有时候中文文本需要调整编码模式为 `encoding="gbk"`
+
+## 读取目录下多个/所有csv文件
+
+```python
+import os
+
+df_list = []
+data_dir = "./data"
+for fn in os.listdir(data_dir):
+    df_list.append(pd.read_csv(os.path.join(data_dir, fn)))
+```
+
