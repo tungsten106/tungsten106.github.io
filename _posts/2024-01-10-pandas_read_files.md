@@ -2,7 +2,7 @@
 title: Pandas tips - 数据文件读取
 date: 2024-01-09 13:40:00 +0800
 categories: [学习笔记]
-tags: [pandas, python]     # TAG names should always be lowercase
+tags: [pandas, python, pandas]     # TAG names should always be lowercase
 img_path: /assets/img/
 ---
 
