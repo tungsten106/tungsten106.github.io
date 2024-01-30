@@ -17,7 +17,7 @@ img_path: /assets/img/
 由于多周期性，作者提出了使用模块化的结构，通过单个模块来捕捉某个特定的周期中时序的变化，也可以将不同时间周期之间解耦。
 但是1d时序模型比较难展示两种不同的变化，因此，作者将1d的问题延展到2d空间上。具体操作上是将1d时间序列转为2d tensor，每一列代表一个周期内的时间点，而每一行代表同意阶段的一些时间点在不同周期中的值。
 
-![img](../assets\img\timesnet\temporal_transform.png)
+![img](timesnet\temporal_transform.png)
 
 作者通过流程得到了temporal 2d-variations（时序上的2d变化）
 
@@ -35,7 +35,7 @@ $$
 
 这里运用了FFT，将时间序列转换为频域信号，然后选择最显著的频率成分，以便更好地捕捉时间序列的周期性变化。FFT介绍可以看这篇：[What is FFT?](https://tungsten106.github.io/posts/what_is_fft/)
 
-![img](../assets\img\timesnet\FFT_transform.png)
+![img](timesnet\FFT_transform.png)
 
 由于频率信号的共轭性（FFT提取出的频率是在T/2处对称的），在频域信号中我们获得了 $f_1,…f_{T/2}$ 个频率，作者在这些频率中选择top-k个最显著，也就是振幅最大的频率 $\{f_1,…f_k\}$，k为一个超参数。
 
@@ -44,7 +44,7 @@ $$
 
 ## TimesBlock
 网络结构如下：
-![img](../assets\img\timesnet\network_structure.png)
+![img](timesnet\network_structure.png)
 
 更新公式：
 $$
@@ -89,7 +89,7 @@ $$
 
 结果展示：
 
-![img](../assets\img\timesnet\results_statistics.png)
+![img](timesnet\results_statistics.png)
 
 # Appendix
 
